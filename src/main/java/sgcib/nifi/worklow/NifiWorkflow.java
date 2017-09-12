@@ -94,9 +94,9 @@ public class NifiWorkflow implements Result{
 		
 		if (totalProcessor != workflowConfiguration.getProcessors().size()) {
 			
-//			System.out.println("ERROR : The number of processors in configuration file and the number of processors in Nifi Service are not the same :");
-//			System.out.println("\t There are " + totalProcessor + " processors work on Nifi but " + workflowConfiguration.getProcessors().size() + " processors in the Configuration file");
-//			return FAILURE_CONFIGURATION_NOT_VALID;
+			System.out.println("ERROR : The number of processors in configuration file and the number of processors in Nifi Service are not the same :");
+			System.out.println("\t There are " + totalProcessor + " processors work on Nifi but " + workflowConfiguration.getProcessors().size() + " processors in the Configuration file");
+			return FAILURE_CONFIGURATION_NOT_VALID;
 		}
 		
 
