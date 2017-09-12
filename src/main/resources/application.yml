@@ -1,0 +1,14 @@
+workflow:
+
+ url : http://localhost:9090/nifi-api/
+
+ processors:
+  - 
+   name: PRPExtractCSV
+   status: stop
+   emptyQueues: false
+   
+  - 
+   name: ScanSnapshotCutOff
+   status: start
+   emptyQueues: false
