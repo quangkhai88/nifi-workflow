@@ -89,27 +89,22 @@ public class NifiWorkflow implements Result{
 			return FAILURE_CONFIGURATION_NOT_VALID;
 		}
 		
-		int totalProcessor = rootNifiProcessGroup.getRunningCount() + rootNifiProcessGroup.getStoppedCount();
-		setTotalProcessors(totalProcessor);
-		
-		if (totalProcessor != workflowConfiguration.getProcessors().size()) {
-			
-			System.out.println("ERROR : The number of processors in configuration file and the number of processors in Nifi Service are not the same :");
-			System.out.println("\t There are " + totalProcessor + " processors work on Nifi but " + workflowConfiguration.getProcessors().size() + " processors in the Configuration file");
-			return FAILURE_CONFIGURATION_NOT_VALID;
-		}
-		
-
+		/*   Verify processors in config file have unique name  */
+		boolean duplicateConfigProcessor = false;
 		for (ProcessorConfig processorConfig : workflowConfiguration.getProcessors()) {
 
-			String processorName = processorConfig.getName();
+			String processorName = processorConfig.getName().trim();
 			
 			if (configProcessorsMap.get(processorName) != null) {
 				System.out.println("ERROR : At least 2 processors in Configuration file have same name : " + processorName);
-				return FAILURE_NIFI_CONFIGURATION_PROCESSOR_NAME_DUPLICATE;
+				duplicateConfigProcessor = true;
 			} else {
 				configProcessorsMap.put(processorName, processorConfig);
 			}
+		}
+		
+		if (duplicateConfigProcessor) {
+			return FAILURE_NIFI_CONFIGURATION_PROCESSOR_NAME_DUPLICATE;
 		}
 		
 		return SUCCESS;
@@ -126,25 +121,43 @@ public class NifiWorkflow implements Result{
 		Set<ProcessGroupEntity> allProcessGroupEntities = processGroupService.getProcessGroups();
 		allProcessGroupEntities.add(rootProcessGroup);
 		
+		boolean isValid = true;
+		
+		int totalNifiProcessor = 0;
+		
 		for (ProcessGroupEntity processGroupEntity : allProcessGroupEntities) {
 		
 			Set<ProcessorEntity> 	processors 		= (Set<ProcessorEntity>) 	processGroupService.getComponentsInGroup(processGroupEntity, ProcessorEntity.class);
 			Set<ConnectionEntity> 	connections 	= (Set<ConnectionEntity>) 	processGroupService.getComponentsInGroup(processGroupEntity, ConnectionEntity.class);
 			Set<PortEntity> 		ports 			= (Set<PortEntity>) 		processGroupService.getComponentsInGroup(processGroupEntity, PortEntity.class);
 			
-			int result = loadProcessorsInGroup(processors, connections, ports);
-			if (result != SUCCESS){
-				return result;
-			}
+			totalNifiProcessor += processors.size();
+			
+			isValid = isValid && loadProcessorsInGroup(processors, connections, ports);
 		}
+		
+		setTotalProcessors(totalNifiProcessor);
+		
+		if (totalNifiProcessor != workflowConfiguration.getProcessors().size()) {
+			System.out.println("ERROR : The number of processors in configuration file and the number of processors in Nifi Service are not the same :");
+			System.out.println("\tThere are " + totalNifiProcessor + " processors work on Nifi but " + workflowConfiguration.getProcessors().size() + " processors in the Configuration file");
+			return FAILURE_CONFIGURATION_NOT_VALID;
+		}
+		
+		if (!isValid) {
+			return FAILURE_NIFI_WORKFLOW_PROCESSOR_NAME_DUPLICATE;
+		}
+		
 		return SUCCESS;
 	}
 	
 	
 	/*
-	 * In each group, load processors and their connections + port (input+output) 
+	 * In each group, load processors and its connections + ports (input+output) 
 	 */
-	private int loadProcessorsInGroup(Set<ProcessorEntity> processorsSet, Set<ConnectionEntity> connectionsSet, Set<PortEntity> portsSet) {
+	private boolean loadProcessorsInGroup(Set<ProcessorEntity> processorsSet, Set<ConnectionEntity> connectionsSet, Set<PortEntity> portsSet) {
+		
+		boolean isValid = true;
 		
 		List<ProcessorEntity> 	processorListInGroup 	=  	new ArrayList<ProcessorEntity>();
 		List<ConnectionEntity> 	connectionsListInGroup  = 	new ArrayList<ConnectionEntity>();
@@ -156,11 +169,11 @@ public class NifiWorkflow implements Result{
 		
 		for (ProcessorEntity processorEntity : processorListInGroup) {
 			
-			String processorName = processorEntity.getComponent().getName();
+			String processorName = processorEntity.getComponent().getName().trim();
 			
 			if (nifiProcessorsMap.get(processorName) != null) {
 				System.out.println("ERROR : At least 2 processors running in Nifi Workflow have same name : " + processorEntity.getComponent().getName());
-//				return FAILURE_NIFI_WORKFLOW_PROCESSOR_NAME_DUPLICATE;
+				isValid = false;
 			}
 			
 			ProcessorData processorGroupData = new ProcessorData();
@@ -193,25 +206,69 @@ public class NifiWorkflow implements Result{
 			
 			nifiProcessorsMap.put(processorName, processorGroupData);
 		}
-		return SUCCESS;
+		
+		return isValid;
 	}
 	
 	
 	
-	 /* Verify Nifi workflow match the configuration, all processors in config file have to match all Nifi processors */
+	 /* Verify all processors in configuration file have to match all Nifi processors */
+	
 	public int validateNifiWorkFlowConfiguration() {
+		
+		boolean isValid = true;
+		
+		List<String> nifiRedundantProcessors 	= new ArrayList<String>();
+		List<String> configRedudantProcessors 	= new ArrayList<String>();
 		
 		for (Entry<String, ProcessorConfig> entry : configProcessorsMap.entrySet()) {
 			
 			String processorName = entry.getKey();
 			
 			if (nifiProcessorsMap.get(processorName) == null) {
-				
-				System.out.println("ERROR : processor " + processorName + " found in Configuration file but not found in Nifi");
-				return FAILURE_NIFI_PROCESSOR_NOT_MATCH;
+				configRedudantProcessors.add(processorName);
 			}
 		}
-
+		
+		for (Entry<String, ProcessorData> entry : nifiProcessorsMap.entrySet()) {
+			
+			String processorName = entry.getKey();
+			
+			if (configProcessorsMap.get(processorName) == null) {
+				nifiRedundantProcessors.add(processorName);
+			}
+		}
+		
+		if (nifiRedundantProcessors.size() > 0) {
+			
+			isValid = false;
+			
+			System.out.println("ERROR : The processors bellow  found in Nifi but not found in Configuration file: ");
+			
+			nifiRedundantProcessors.forEach(processor -> {
+				System.out.println("\t" + processor);
+			});
+		}
+		
+		if (configRedudantProcessors.size() > 0) {
+			
+			isValid = false;
+			
+			System.out.println("ERROR : The processors bellow  found in Configuration file but not found in Nifi :");
+			
+			configRedudantProcessors.forEach(processor -> {
+				System.out.println("\t" + processor);
+			});
+		}
+		
+		
+		if (!isValid) {
+			
+			System.out.println("WARNING : The processors in Nifi and Configuration file should not contain leading and trailing whitespace");
+			
+			return FAILURE_NIFI_PROCESSOR_NOT_MATCH;
+		}
+		
 		return SUCCESS;
 	}
 	

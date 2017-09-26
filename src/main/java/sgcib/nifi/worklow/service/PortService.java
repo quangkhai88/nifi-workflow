@@ -24,27 +24,6 @@ public class PortService extends GenericService<PortEntity> {
 		super.init(baseUrl);
 	}
 	
-//	@Override
-//	public PortEntity getById(String componentId) {
-//		String getProcessorUrl = serviceUrl + "{componentId}";
-//		ResponseEntity<PortEntity> responsePortEntity = restTemplate.getForEntity(getProcessorUrl, PortEntity.class, componentId);
-//		return responsePortEntity.getBody();
-//	}
-	
-//	public void updatePort(PortEntity portEntity) {
-//		try {
-//			
-//		    HttpHeaders headers = new HttpHeaders();
-//		    headers.setContentType(MediaType.APPLICATION_JSON);
-//		    
-//		    HttpEntity<PortEntity> request = new HttpEntity<PortEntity>(portEntity, headers);
-//		    restTemplate.exchange(serviceUrl + portEntity.getId(), HttpMethod.PUT, request, PortEntity.class);
-//		    
-//		} catch (Exception e) {
-//			System.out.println(e);
-//		}
-//
-//	}
 	
 	private void updatePortStatus(PortEntity portEntity, Status status) {
 		

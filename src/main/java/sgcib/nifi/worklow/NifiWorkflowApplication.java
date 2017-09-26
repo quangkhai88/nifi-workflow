@@ -26,7 +26,8 @@ public class NifiWorkflowApplication  implements CommandLineRunner, Result{
 	@Override
 	public void run(String... args) {
 
-		System.out.println("*************************************  TPS NIFI WORKFLOW - START  *********************************");
+		System.out.println();
+		System.out.println("**********************************************  TPS NIFI WORKFLOW - START  **********************************************");
 		
 		int codeResult = nifiWorkflow.initWorkflow();
 		
@@ -42,10 +43,14 @@ public class NifiWorkflowApplication  implements CommandLineRunner, Result{
 			codeResult = nifiWorkflow.startNifiWorkflowProcess();
 		}
 		
-		System.out.println("Result : NIFI workflow is started !, code return :  " + codeResult);
+		String nifiWorkflowControlToolStatus = codeResult == SUCCESS ? "started" : "not started";
+		
+		System.out.println("Result : NIFI workflow control tool is " + nifiWorkflowControlToolStatus +", code return :  " + codeResult);
+		
 		System.out.println("There are " + nifiWorkflow.getUpdatedProcessorNumber() + "/" + nifiWorkflow.getTotalProcessors() + " processors were updated");
-		System.out.println("*************************************  TPS NIFI WORKFLOW  -  END  *********************************");
-
+		
+		System.out.println("**********************************************  TPS NIFI WORKFLOW - END  **********************************************");
+		System.out.println();
 		
 		System.exit(codeResult);
     }
