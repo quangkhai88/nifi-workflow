@@ -2,7 +2,7 @@ nifi-workflow-tool : is used to update Nifi processors by Rest Api
 
 To start Nifi workflow control tool:
 
-2 ways to launch jar file with configuration file:
+2 ways to execute jar file with configuration file:
 
 
   1. Place jar file and config file in the same folder and execute:
