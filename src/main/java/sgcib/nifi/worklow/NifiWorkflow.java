@@ -70,7 +70,6 @@ public class NifiWorkflow implements Result{
 	
 	public int initWorkflow() {
 		
-		ProcessGroupEntity rootNifiProcessGroup = null;
 		String baseUrl = workflowConfiguration.getUrl();
 		
 		try {
@@ -81,11 +80,9 @@ public class NifiWorkflow implements Result{
 			outPutPortService.init(baseUrl);
 			connectionService.init(baseUrl);
 			
-			rootNifiProcessGroup = processGroupService.getById("root");
-			
 		} catch (Exception exception) {
 			
-			System.out.println("Can not reach Nifi Service with  the url " + baseUrl + " : " + exception);
+			System.out.println("Can not reach Nifi Service with  the url " + baseUrl + " : " + exception + "\nMaybe the configuration file is not found");
 			return FAILURE_CONFIGURATION_NOT_VALID;
 		}
 		

@@ -45,6 +45,8 @@ public class NifiWorkflowApplication  implements CommandLineRunner, Result{
 		
 		String nifiWorkflowControlToolStatus = codeResult == SUCCESS ? "started" : "not started";
 		
+		System.out.println("Status : " + (codeResult == SUCCESS ? "OK" : "KO"));
+		
 		System.out.println("Result : NIFI workflow control tool is " + nifiWorkflowControlToolStatus +", code return :  " + codeResult);
 		
 		System.out.println("There are " + nifiWorkflow.getUpdatedProcessorNumber() + "/" + nifiWorkflow.getTotalProcessors() + " processors were updated");

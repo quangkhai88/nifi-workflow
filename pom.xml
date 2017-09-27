@@ -5,7 +5,7 @@
 
 	<groupId>sgcib.nifi.worklow</groupId>
 	<artifactId>nifi-workflow</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>nifi-workflow</name>

@@ -40,8 +40,6 @@ public class ConnectionService extends GenericService<ConnectionEntity> {
 	    
 	    ResponseEntity<String> response = restTemplate.exchange(emptyflowFileConnection, HttpMethod.POST, entity, String.class);
 	    
-	    System.out.println(response.getBody());
-
 	}
 	
 	
