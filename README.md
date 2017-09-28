@@ -11,11 +11,5 @@ To start Nifi workflow control tool:
 
   2. They are not in the same folder:
   
-		java -jar nifi-workflow-0.0.1.jar --spring.config.location="pathToConfigFile" --spring.config.name=application.yml
 		
-
-Note: the application is done by using Spring Boot and Java 8. 
-
-We can execute jar file with specific java path:
-
-		"Java8_home/bin"/java -jar nifi-workflow-0.0.1.jar --spring.config.location="pathToConfigFile" --spring.config.name=application.yml
+		java -jar nifi-workflow-0.0.1.jar --spring.config.location="pathToConfigFile" --spring.config.name=application.yml
