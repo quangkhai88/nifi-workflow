@@ -1,4 +1,4 @@
-package sgcib.nifi.worklow.param;
+package nifi.worklow.param;
 
 /**
  * @author qtran071917

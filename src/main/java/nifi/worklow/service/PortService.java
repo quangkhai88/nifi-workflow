@@ -1,11 +1,11 @@
-package sgcib.nifi.worklow.service;
+package nifi.worklow.service;
+
+import nifi.worklow.param.Status;
 
 import org.apache.nifi.web.api.dto.PortDTO;
 import org.apache.nifi.web.api.dto.status.PortStatusDTO;
 import org.apache.nifi.web.api.entity.PortEntity;
 import org.springframework.stereotype.Service;
-
-import sgcib.nifi.worklow.param.Status;
 
 /**
  * @author qtran071917

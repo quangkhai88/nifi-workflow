@@ -1,4 +1,4 @@
-package sgcib.nifi.worklow.service;
+package nifi.worklow.service;
 
 import org.springframework.stereotype.Service;
 

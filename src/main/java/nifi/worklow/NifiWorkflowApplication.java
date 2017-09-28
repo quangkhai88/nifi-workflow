@@ -1,4 +1,6 @@
-package sgcib.nifi.worklow;
+package nifi.worklow;
+
+import nifi.worklow.param.Result;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -6,10 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-import sgcib.nifi.worklow.param.Result;
-
 @SpringBootApplication
-@ComponentScan("sgcib.nifi.worklow")
+@ComponentScan("nifi.worklow")
 public class NifiWorkflowApplication  implements CommandLineRunner, Result{
 
 	

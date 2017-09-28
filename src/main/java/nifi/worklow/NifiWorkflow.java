@@ -1,4 +1,4 @@
-package sgcib.nifi.worklow;
+package nifi.worklow;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import nifi.worklow.param.Result;
+import nifi.worklow.param.Status;
+import nifi.worklow.param.WorkflowConfig;
+import nifi.worklow.param.WorkflowConfig.ProcessorConfig;
+import nifi.worklow.service.ConnectionService;
+import nifi.worklow.service.InputPortService;
+import nifi.worklow.service.OutPutPortService;
+import nifi.worklow.service.ProcessGroupService;
+import nifi.worklow.service.ProcessorService;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.nifi.web.api.entity.ConnectionEntity;
 import org.apache.nifi.web.api.entity.PortEntity;
@@ -14,16 +24,6 @@ import org.apache.nifi.web.api.entity.ProcessGroupEntity;
 import org.apache.nifi.web.api.entity.ProcessorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import sgcib.nifi.worklow.param.Result;
-import sgcib.nifi.worklow.param.Status;
-import sgcib.nifi.worklow.param.WorkflowConfig;
-import sgcib.nifi.worklow.param.WorkflowConfig.ProcessorConfig;
-import sgcib.nifi.worklow.service.ConnectionService;
-import sgcib.nifi.worklow.service.InputPortService;
-import sgcib.nifi.worklow.service.OutPutPortService;
-import sgcib.nifi.worklow.service.ProcessGroupService;
-import sgcib.nifi.worklow.service.ProcessorService;
 
 /**
  * @author qtran071917

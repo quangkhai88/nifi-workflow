@@ -1,4 +1,4 @@
-package sgcib.nifi.worklow.param;
+package nifi.worklow.param;
 
 import java.util.List;
 

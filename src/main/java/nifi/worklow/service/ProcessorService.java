@@ -1,4 +1,6 @@
-package sgcib.nifi.worklow.service;
+package nifi.worklow.service;
+
+import nifi.worklow.param.Status;
 
 import org.apache.nifi.web.api.dto.ProcessorDTO;
 import org.apache.nifi.web.api.dto.status.ProcessorStatusDTO;
@@ -7,8 +9,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-
-import sgcib.nifi.worklow.param.Status;
 
 /**
  * @author qtran071917
