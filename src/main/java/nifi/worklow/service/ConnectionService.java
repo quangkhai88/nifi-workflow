@@ -8,10 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-/**
- * @author qtran071917
- * @date Sep 7, 2017
- */
 
 @Service
 public class ConnectionService extends GenericService<ConnectionEntity> {

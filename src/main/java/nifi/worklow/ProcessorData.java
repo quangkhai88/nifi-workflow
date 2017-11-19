@@ -6,10 +6,6 @@ import org.apache.nifi.web.api.entity.ConnectionEntity;
 import org.apache.nifi.web.api.entity.PortEntity;
 import org.apache.nifi.web.api.entity.ProcessorEntity;
 
-/**
- * @author qtran071917
- * @date Sep 8, 2017
- */
 
 public class ProcessorData {
 	

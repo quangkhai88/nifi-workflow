@@ -5,11 +5,6 @@ import java.util.List;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-/**
- * @author qtran071917
- * @date Aug 30, 2017
- */
-
 @Component
 @ConfigurationProperties(prefix="workflow")
 public class WorkflowConfig {

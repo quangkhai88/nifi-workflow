@@ -1,10 +1,5 @@
 package nifi.worklow.param;
 
-/**
- * @author qtran071917
- * @date Sep 1, 2017
- */
-
 public interface Result {
 	
 

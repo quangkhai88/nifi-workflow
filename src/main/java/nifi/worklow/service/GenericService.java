@@ -15,9 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 
-/**
- * @author qtran071917
- */
 
 public abstract class GenericService<T extends ComponentEntity> {
 	

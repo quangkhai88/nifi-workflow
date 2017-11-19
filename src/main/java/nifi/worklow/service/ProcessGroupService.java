@@ -20,10 +20,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-/**
- * @author qtran071917
- */
-
 @Service
 public class ProcessGroupService extends GenericService<ProcessGroupEntity> {
 	

@@ -25,10 +25,6 @@ import org.apache.nifi.web.api.entity.ProcessorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * @author qtran071917
- * @date Sep 8, 2017
- */
 
 
 @Component

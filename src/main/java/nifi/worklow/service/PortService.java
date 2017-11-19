@@ -7,9 +7,6 @@ import org.apache.nifi.web.api.dto.status.PortStatusDTO;
 import org.apache.nifi.web.api.entity.PortEntity;
 import org.springframework.stereotype.Service;
 
-/**
- * @author qtran071917
- */
 
 @Service
 public class PortService extends GenericService<PortEntity> {

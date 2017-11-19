@@ -10,9 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
-/**
- * @author qtran071917
- */
 
 @Service
 public class ProcessorService extends GenericService<ProcessorEntity> {

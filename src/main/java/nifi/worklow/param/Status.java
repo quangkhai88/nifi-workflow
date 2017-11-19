@@ -1,9 +1,5 @@
 package nifi.worklow.param;
 
-/**
- * @author qtran071917
- * @date Aug 23, 2017
- */
 
 public enum Status {
 	
